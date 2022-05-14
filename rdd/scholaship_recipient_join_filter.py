@@ -1,4 +1,4 @@
-from pyspark.sql import SparkSession, Row
+from pyspark.sql import SparkSession
 from distutils.util import strtobool
 import os.path
 import yaml
@@ -44,8 +44,10 @@ if __name__ == '__main__':
 
     print('Participants belongs to \'Switzerland\', having debts and financial dependents,')
     join_pair_rdd = demographics_pair_rdd \
-        .join(finances_pair_rdd) \
-        .filter(lambda rec: (rec[1][0][2] == "Switzerland") and (rec[1][1][0] == 1) and (rec[1][1][1] == 1)) \
+        .join(finances_pair_rdd)
+    join_pair_rdd.foreach(print)
+
+    join_pair_rdd = join_pair_rdd.filter(lambda rec: (rec[1][0][2] == "Switzerland") and (rec[1][1][0] == 1) and (rec[1][1][1] == 1)) \
 
     join_pair_rdd.foreach(print)
 
