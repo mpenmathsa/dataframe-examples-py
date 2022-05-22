@@ -33,4 +33,12 @@ if __name__ == '__main__':
 
     ol_txn_df.show(5, False)
 
+    ol_txn_df \
+        .write \
+        .mode("overwrite") \
+        .option("header", "true") \
+        .option("delimiter", "~") \
+        .csv("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/rewards")
+
+
 # spark-submit --packages "com.springml:spark-sftp_2.11:1.1.1" dataframe/ingestion/others/systems/sftp_df.py
